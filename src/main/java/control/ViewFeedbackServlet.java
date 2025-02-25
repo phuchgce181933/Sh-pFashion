@@ -5,6 +5,8 @@
 
 package control;
 
+import DAO.FeedbackDAO;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
