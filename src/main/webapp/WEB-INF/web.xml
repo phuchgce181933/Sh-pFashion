@@ -4,9 +4,25 @@
         <servlet-name>ACB</servlet-name>
         <servlet-class>Models.ACB</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateFeedbackServlet</servlet-name>
+        <servlet-class>control.CreateFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackServlet</servlet-name>
+        <servlet-class>control.ViewFeedbackServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ACB</servlet-name>
         <url-pattern>/ACB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateFeedbackServlet</servlet-name>
+        <url-pattern>/CreateFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackServlet</servlet-name>
+        <url-pattern>/ViewFeedback</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
