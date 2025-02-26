@@ -10,22 +10,24 @@ package Models;
  */
 
 
+
+
 public class Feedback {
     private int feedbackId;
     private int userId;
     private int productId;
     private int rating;
-    private String comment;
 
-    public Feedback(int feedbackId, int userId, int productId, int rating, String comment) {
+    public Feedback() {
+    }
+
+    public Feedback(int feedbackId, int userId, int productId, int rating) {
         this.feedbackId = feedbackId;
         this.userId = userId;
         this.productId = productId;
         this.rating = rating;
-        this.comment = comment;
     }
 
-    
     public int getFeedbackId() {
         return feedbackId;
     }
@@ -58,11 +60,13 @@ public class Feedback {
         this.rating = rating;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "feedbackId=" + feedbackId +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", rating=" + rating +
+                '}';
     }
 }

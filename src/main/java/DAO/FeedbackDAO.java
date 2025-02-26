@@ -13,29 +13,40 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class FeedbackDAO extends DBContext {
+    public boolean insertFeedback(Feedback feedback) {
+        String sql = "INSERT INTO Feedback (UserID, PID, Rating) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, feedback.getUserId());
+            ps.setInt(2, feedback.getProductId());
+            ps.setInt(3, feedback.getRating());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, "Database Error!", e);
+            return false;
+        }
+    }
 
     public List<Feedback> getAllFeedback() {
-        List<Feedback> feedbackList = new ArrayList<>();
-        String sql = "SELECT * FROM Feedback";
+    List<Feedback> list = new ArrayList<>();
+    String sql = "SELECT FeedbackID, UserID, PID, Rating FROM Feedback";
 
-        try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Feedback feedback = new Feedback(
-                    rs.getInt("FeedbackID"),
-                    rs.getInt("UserID"),
-                    rs.getInt("PID"),
-                    rs.getInt("Rating"),
-                    rs.getString("Comment")
-                );
-                feedbackList.add(feedback);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+    try (PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Feedback fb = new Feedback(
+                rs.getInt("FeedbackID"),
+                rs.getInt("UserID"),
+                rs.getInt("PID"),
+                rs.getInt("Rating")
+            );
+            list.add(fb);
         }
-        return feedbackList;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return list;
+}
+   
 }

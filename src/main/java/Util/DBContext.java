@@ -14,28 +14,21 @@ import java.util.logging.Logger;
  *
  * @author Huynh Gia Phuc - CE181933
  */
-public class DBContext {
 
+public class DBContext {
     protected Connection conn;
 
     public DBContext() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbURL = "jdbc:sqlserver://localhost:1433;"
-                    +"databaseName=SWP9;"
-                    +"user=sa;"
-                    +"password=123;"
-                    +"encrypt=true;trustServerCertificate=true;";
+                    + "databaseName=SWP9;"
+                    + "user=sa;"
+                    + "password=123;"
+                    + "encrypt=true;trustServerCertificate=true;";
             conn = DriverManager.getConnection(dbURL);
-        
-        } catch (SQLException ex) {
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, "Database connection error!", ex);
         }
-        
     }
-      
-
-
 }

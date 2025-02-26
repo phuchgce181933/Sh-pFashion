@@ -5,6 +5,8 @@
 
 package control;
 
+import DAO.FeedbackDAO;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -63,10 +65,28 @@ public class CreateFeedbackServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        try {
+            // Lấy dữ liệu từ form
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            int rating = Integer.parseInt(request.getParameter("rating"));
+
+            // Tạo feedback mới
+            Feedback feedback = new Feedback(0, userId, productId, rating);
+
+            // Lưu vào database qua DAO
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            feedbackDAO.insertFeedback(feedback);
+
+            // Chuyển hướng về trang thành công
+            response.sendRedirect("feedback_success.jsp");
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid input! Please enter valid numbers.");
+            request.getRequestDispatcher("feedback_form.jsp").forward(request, response);
+        }
     }
 
     /** 
